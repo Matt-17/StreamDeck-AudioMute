@@ -67,25 +67,8 @@ void ToggleMuteAction::KeyUp() {
     if (!muteState) {
       ShowAlert();
       return;
-    }
-    const auto muted = *muteState;
-
-    if (muted) {
-      // PTM-mode, unmute immediately...
-      DoAction();
-      return;
-    }
-
-    // PTT: people tend to let go of the button just a little too soon, so delay
-    auto ctx = GetESD()->GetAsioContext();
-    mPttReleaseTimer = std::make_unique<asio::steady_timer>(*ctx, std::chrono::milliseconds(250));
-    mPttReleaseTimer->async_wait([this](const asio::error_code& ec) {
-      if (ec) {
-        return;
-      }
-      DoAction();
-    });
-    return;
+    }     
+    DoAction();     
   }
   BaseMuteAction::KeyUp();
 }
