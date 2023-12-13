@@ -51,7 +51,3 @@ endif()
 target_compile_definitions(audiotoggle PRIVATE -DHAVE_FEEDBACK_SOUNDS=1)
 install(TARGETS audiotoggle DESTINATION ${CMAKE_INSTALL_PREFIX})
 sign_target(audiotoggle)
-
-if(WIN32)
-  install(FILES "$<TARGET_PDB_FILE:audiotoggle>" DESTINATION ${CMAKE_INSTALL_PREFIX})
-endif()

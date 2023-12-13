@@ -45,40 +45,26 @@ jobs:
         working-directory: build
         run: cmake --install . --config ${{matrix.build-type}}
       - name: Upload MacOS Executable
-        if: matrix.os == 'macos' && matrix.build-type != 'Debug'
+        if: matrix.os == 'macos'
         uses: actions/upload-artifact@v3
         with:
           name: MacOS-${{matrix.arch}}-${{matrix.build-type}}
           path: build/Sources/audiotoggle
       - name: Upload Windows Executable
-        if: matrix.os == 'windows' && matrix.build-type != 'Debug'
+        if: matrix.os == 'windows'
         uses: actions/upload-artifact@v3
         with:
           name: Windows-${{matrix.build-type}}
           path: build/Sources/${{matrix.build-type}}/audiotoggle.exe
-      - name: Upload Windows Debug Symbols
-        if: matrix.os == 'windows' && matrix.build-type != 'Release' && matrix.build-type != 'Debug'
-        uses: actions/upload-artifact@v3
-        with:
-          name: DebugSymbols-${{matrix.os}}-${{matrix.build-type}}
-          path: build/Sources/${{matrix.build-type}}/audiotoggle.pdb
     strategy:
       matrix:
-        target: [windows, macos-arm64, macos-x86_64]
-        build-type: [RelWithDebInfo, Debug]
+        target: [windows]
+        build-type: [Release]
         include:
           - target: windows
             os: windows
             arch: x86_64
             os_version: latest
-          - target: macos-arm64
-            os: macos
-            arch: arm64
-            os_version: 12 # 'latest' is current 11, need better C++20 support
-          - target: macos-x86_64
-            os: macos
-            arch: x86_64
-            os_version: 12
 
   streamDeckPlugin:
     name: Pack streamDeckPlugin
@@ -109,12 +95,12 @@ jobs:
       - name: Copy executables
         working-directory: ${{runner.temp}}
         run: |
-          lipo -create \
-            artifacts/MacOS-arm64-RelWithDebInfo/audiotoggle \
-            artifacts/MacOS-x86_64-RelWithDebInfo/audiotoggle \
-            -output de.codeix.audiotoggle.sdPlugin/audiotoggle
+         # lipo -create \
+         #   artifacts/MacOS-arm64-Release/audiotoggle \
+         #   artifacts/MacOS-x86_64-Release/audiotoggle \
+         #   -output de.codeix.audiotoggle.sdPlugin/audiotoggle
           install -m755 \
-            artifacts/Windows-RelWithDebInfo/audiotoggle.exe \
+            artifacts/Windows-Release/audiotoggle.exe \
             de.codeix.audiotoggle.sdPlugin/audiotoggle.exe
       - name: Checkout DistributionTool
         uses: actions/checkout@v4
@@ -138,35 +124,24 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         path: ${{runner.temp}}/artifacts
+
     - name: Display downloaded files
       run: ls -R
       working-directory: ${{runner.temp}}/artifacts
+
     - name: Check if this is a release push
       id: ref
       run: |
         if echo ${{github.ref}} | grep --silent refs/tags/v; then
-          echo "is-release=true" >> $GITHUB_OUTPUT
           echo "tag=$(echo ${{github.ref}} | awk -F/ '{print $NF}')" >> $GITHUB_OUTPUT
-        else
-          echo "is-release=false" >> $GITHUB_OUTPUT
         fi
-    - name: Create Draft Release
-      id: create-release
-      if: steps.ref.outputs.is-release == 'true'
-      uses: actions/create-release@v1
+
+    - name: Creates a release
+      if: steps.ref.outputs.tag != ''
+      run: |
+        gh release create ${{ steps.ref.outputs.tag }} \
+          ${{runner.temp}}/artifacts/StreamDeckPlugin/de.codeix.audiotoggle.streamDeckPlugin \
+          --draft \
+          --title "${{ steps.ref.outputs.tag }}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        release_name: Release ${{ steps.ref.outputs.tag }}
-        tag_name: ${{steps.ref.outputs.tag}}
-        draft: true
-    - name: Attach Release Build
-      if: steps.ref.outputs.is-release == 'true'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create-release.outputs.upload_url }}
-        asset_path: ${{runner.temp}}/artifacts/StreamDeckPlugin/de.codeix.audiotoggle.streamDeckPlugin
-        asset_name: de.codeix.audiotoggle.streamDeckPlugin
-        asset_content_type: application/octet-stream
