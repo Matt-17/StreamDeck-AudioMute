@@ -58,13 +58,21 @@ jobs:
           path: build/Sources/${{matrix.build-type}}/audiotoggle.exe
     strategy:
       matrix:
-        target: [windows]
+        target: [windows] # , macos-arm64, macos-x86_64]
         build-type: [Release]
         include:
           - target: windows
             os: windows
             arch: x86_64
             os_version: latest
+          # - target: macos-arm64
+          #   os: macos
+          #   arch: arm64
+          #   os_version: 12 # 'latest' is current 11, need better C++20 support
+          # - target: macos-x86_64
+          #   os: macos
+          #   arch: x86_64
+          #   os_version: 12
 
   streamDeckPlugin:
     name: Pack streamDeckPlugin
@@ -95,10 +103,10 @@ jobs:
       - name: Copy executables
         working-directory: ${{runner.temp}}
         run: |
-         # lipo -create \
-         #   artifacts/MacOS-arm64-Release/audiotoggle \
-         #   artifacts/MacOS-x86_64-Release/audiotoggle \
-         #   -output de.codeix.audiotoggle.sdPlugin/audiotoggle
+          # lipo -create \
+          #   artifacts/MacOS-arm64-Release/audiotoggle \
+          #   artifacts/MacOS-x86_64-Release/audiotoggle \
+          #   -output de.codeix.audiotoggle.sdPlugin/audiotoggle
           install -m755 \
             artifacts/Windows-Release/audiotoggle.exe \
             de.codeix.audiotoggle.sdPlugin/audiotoggle.exe
