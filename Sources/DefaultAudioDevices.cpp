@@ -9,13 +9,13 @@
 #include <AudioDevices/AudioDevices.h>
 
 const std::string DefaultAudioDevices::DEFAULT_INPUT_ID(
-  "com.fredemmott.sdmute.deviceIds.defaultInput");
+  "de.codeix.sdmute.deviceIds.defaultInput");
 const std::string DefaultAudioDevices::DEFAULT_OUTPUT_ID(
-  "com.fredemmott.sdmute.deviceIds.defaultOutput");
+  "de.codeix.sdmute.deviceIds.defaultOutput");
 const std::string DefaultAudioDevices::COMMUNICATIONS_INPUT_ID(
-  "com.fredemmott.sdmute.deviceIds.communicationsInput");
+  "de.codeix.sdmute.deviceIds.communicationsInput");
 const std::string DefaultAudioDevices::COMMUNICATIONS_OUTPUT_ID(
-  "com.fredemmott.sdmute.deviceIds.communicationsOutput");
+  "de.codeix.sdmute.deviceIds.communicationsOutput");
 
 std::string DefaultAudioDevices::GetRealDeviceID(const std::string& dev) {
   if (dev == DEFAULT_INPUT_ID) {

@@ -14,7 +14,7 @@
 #include "UnmuteAction.h"
 
 const std::string ToggleMuteAction::ACTION_ID(
-  "com.fredemmott.micmutetoggle.toggle");
+  "de.codeix.micmutetoggle.toggle");
 
 void ToggleMuteAction::MuteStateDidChange(bool isMuted) {
   ESDDebug("MuteStateDidChange to {} for context {}", isMuted, GetContext());
@@ -69,14 +69,6 @@ void ToggleMuteAction::KeyUp() {
       return;
     }
     const auto muted = *muteState;
-    if (
-      std::chrono::steady_clock::now() - mKeyDownTime
-      < std::chrono::milliseconds(500)) {
-      // Short press, and action already taken on keydown - but the streamdeck
-      // software automatically switches state on key up. Undo this.
-      MuteStateDidChange(muted);
-      return;
-    }
 
     if (muted) {
       // PTM-mode, unmute immediately...
@@ -86,8 +78,7 @@ void ToggleMuteAction::KeyUp() {
 
     // PTT: people tend to let go of the button just a little too soon, so delay
     auto ctx = GetESD()->GetAsioContext();
-    mPttReleaseTimer = std::make_unique<asio::steady_timer>(
-      *ctx, std::chrono::milliseconds(250));
+    mPttReleaseTimer = std::make_unique<asio::steady_timer>(*ctx, std::chrono::milliseconds(250));
     mPttReleaseTimer->async_wait([this](const asio::error_code& ec) {
       if (ec) {
         return;
@@ -102,7 +93,6 @@ void ToggleMuteAction::KeyUp() {
 void ToggleMuteAction::KeyDown() {
   if (mPushAndHoldToTalk) {
     DoAction();
-    mKeyDownTime = std::chrono::steady_clock::now();
     return;
   }
   BaseMuteAction::KeyDown();

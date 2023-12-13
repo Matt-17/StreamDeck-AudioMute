@@ -8,7 +8,7 @@ StreamDeck-MicMute is a C++ plugin for the Elgato StreamDeck for muting and unmu
 
 # Installation
 
-Download the `com.fredemmott.micmutetoggle.streamDeckPlugin` file from [the releases page](https://github.com/fredemmott/StreamDeck-MicMute/releases), and double-click it.
+Download the `de.codeix.micmutetoggle.streamDeckPlugin` file from [the releases page](https://github.com/fredemmott/StreamDeck-MicMute/releases), and double-click it.
 
 # Getting Help
 
