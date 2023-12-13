@@ -79,8 +79,9 @@ jobs:
             os: macos
             arch: x86_64
             os_version: 12
+
   streamDeckPlugin:
-    name: streamDeckPlugin/${{matrix.build-type}}
+    name: Pack streamDeckPlugin
     needs: [build]
     runs-on: macos-latest
     steps:
@@ -109,11 +110,11 @@ jobs:
         working-directory: ${{runner.temp}}
         run: |
           lipo -create \
-            artifacts/MacOS-arm64-${{matrix.build-type}}/sdmicmute \
-            artifacts/MacOS-x86_64-${{matrix.build-type}}/sdmicmute \
+            artifacts/MacOS-arm64-RelWithDebInfo/sdmicmute \
+            artifacts/MacOS-x86_64-RelWithDebInfo/sdmicmute \
             -output de.codeix.audiotoggle.sdPlugin/sdmicmute
           install -m755 \
-            artifacts/Windows-${{matrix.build-type}}/sdmicmute.exe \
+            artifacts/Windows-RelWithDebInfo/sdmicmute.exe \
             de.codeix.audiotoggle.sdPlugin/sdmicmute.exe
       - name: Checkout DistributionTool
         uses: actions/checkout@v4
@@ -127,11 +128,9 @@ jobs:
       - name: Upload .streamDeckPlugin
         uses: actions/upload-artifact@v3
         with:
-          name: ${{matrix.build-type}}-StreamDeckPlugin
+          name: RelWithDebInfo-StreamDeckPlugin
           path: de.codeix.audiotoggle.streamDeckPlugin
-    strategy:
-      matrix:
-        build-type: [RelWithDebInfo]
+
   release:
     needs: [streamDeckPlugin]
     runs-on: ubuntu-latest
