@@ -32,26 +32,26 @@ if(APPLE)
 endif()
 
 add_executable(
-  sdmicmute
+  audiotoggle
   ${SOURCES}
 )
 
-target_link_libraries(sdmicmute StreamDeckSDK AudioDeviceLib)
+target_link_libraries(audiotoggle StreamDeckSDK AudioDeviceLib)
 
 if(APPLE)
   find_library(AUDIOTOOLBOX_FRAMEWORK AudioToolbox)
   target_link_libraries(
-    sdmicmute
+    audiotoggle
     ${AUDIOTOOLBOX_FRAMEWORK}
   )
 elseif(WIN32)
-  target_link_libraries(sdmicmute Winmm)
+  target_link_libraries(audiotoggle Winmm)
 endif()
 
-target_compile_definitions(sdmicmute PRIVATE -DHAVE_FEEDBACK_SOUNDS=1)
-install(TARGETS sdmicmute DESTINATION ${CMAKE_INSTALL_PREFIX})
-sign_target(sdmicmute)
+target_compile_definitions(audiotoggle PRIVATE -DHAVE_FEEDBACK_SOUNDS=1)
+install(TARGETS audiotoggle DESTINATION ${CMAKE_INSTALL_PREFIX})
+sign_target(audiotoggle)
 
 if(WIN32)
-  install(FILES "$<TARGET_PDB_FILE:sdmicmute>" DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install(FILES "$<TARGET_PDB_FILE:audiotoggle>" DESTINATION ${CMAKE_INSTALL_PREFIX})
 endif()

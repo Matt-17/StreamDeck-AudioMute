@@ -2,11 +2,13 @@
 <html>
 
 <head>
-  <title>de.codeix.sdmicmute PI</title>
+  <title>de.codeix.audiotoggle PI</title>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="css/sdpi.css">
   <style type="text/css">
-    .hidden { display: none !important; }
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 
@@ -15,12 +17,9 @@
     <div class="sdpi-item">
       <div class="sdpi-item-label">Device</div>
       <select class="sdpi-item-value select" id="device" onchange="saveSettings()">
-        <optgroup label="Standard Device" id="dynamicDevices">
-        </optgroup>
-        <optgroup label="Specific Input Device" id="inputDevices">
-        </optgroup>
-        <optgroup label="Specific Output Device" id="outputDevices">
-        </optgroup>
+        <optgroup label="Standard Device" id="dynamicDevices"></optgroup>
+        <optgroup label="Specific Input Device" id="inputDevices"></optgroup>
+        <optgroup label="Specific Output Device" id="outputDevices"></optgroup>
       </select>
     </div>
     <div type="checkbox" class="sdpi-item hidden" id="pttDiv">

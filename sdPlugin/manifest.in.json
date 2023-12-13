@@ -48,8 +48,8 @@
     }
   ],
   "Author": "Fred Emmott / Matthias Voigt",
-  "CodePathMac": "sdmicmute",
-  "CodePathWin": "sdmicmute.exe",
+  "CodePathMac": "audiotoggle",
+  "CodePathWin": "audiotoggle.exe",
   "Description": "Toggle the mute for audio devices, such as microphones or speakers.",
   "PropertyInspectorPath": "propertyinspector/index.html",
   "Name": "Audio Toggle",
