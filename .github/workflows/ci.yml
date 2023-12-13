@@ -26,7 +26,7 @@ jobs:
         run: |
           $args = @(
             "-DCMAKE_BUILD_TYPE=${{matrix.build-type}}"
-            "-DCMAKE_INSTALL_PREFIX=${{github.workspace}}/com.fredemmott.micmutetoggle.sdPlugin"
+            "-DCMAKE_INSTALL_PREFIX=${{github.workspace}}/de.codeix.micmutetoggle.sdPlugin"
             "-DCMAKE_OSX_ARCHITECTURES=${{matrix.arch}}"
             "-DCMAKE_OSX_DEPLOYMENT_TARGET=10.11"
           )
@@ -94,7 +94,7 @@ jobs:
         shell: pwsh
         run: |
           cmake ${{github.workspace}}/source `
-            "-DCMAKE_INSTALL_PREFIX=${{runner.temp}}/com.fredemmott.micmutetoggle.sdPlugin"
+            "-DCMAKE_INSTALL_PREFIX=${{runner.temp}}/de.codeix.micmutetoggle.sdPlugin"
       - name: Install static files
         working-directory: build/sdPlugin
         run: make install
@@ -111,10 +111,10 @@ jobs:
           lipo -create \
             artifacts/MacOS-arm64-${{matrix.build-type}}/sdmicmute \
             artifacts/MacOS-x86_64-${{matrix.build-type}}/sdmicmute \
-            -output com.fredemmott.micmutetoggle.sdPlugin/sdmicmute
+            -output de.codeix.micmutetoggle.sdPlugin/sdmicmute
           install -m755 \
             artifacts/Windows-${{matrix.build-type}}/sdmicmute.exe \
-            com.fredemmott.micmutetoggle.sdPlugin/sdmicmute.exe
+            de.codeix.micmutetoggle.sdPlugin/sdmicmute.exe
       - name: Checkout DistributionTool
         uses: actions/checkout@v4
         with:
@@ -122,13 +122,13 @@ jobs:
       - name: Build .streamDeckPlugin
         run: |
           ./DistributionTool -b \
-            -i ${{runner.temp}}/com.fredemmott.micmutetoggle.sdPlugin \
+            -i ${{runner.temp}}/de.codeix.micmutetoggle.sdPlugin \
             -o .
       - name: Upload .streamDeckPlugin
         uses: actions/upload-artifact@v3
         with:
           name: ${{matrix.build-type}}-StreamDeckPlugin
-          path: com.fredemmott.micmutetoggle.streamDeckPlugin
+          path: de.codeix.micmutetoggle.streamDeckPlugin
     strategy:
       matrix:
         build-type: [RelWithDebInfo]
@@ -168,8 +168,8 @@ jobs:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create-release.outputs.upload_url }}
-        asset_path: ${{runner.temp}}/artifacts/RelWithDebInfo-StreamDeckPlugin/com.fredemmott.micmutetoggle.streamDeckPlugin
-        asset_name: com.fredemmott.micmutetoggle.streamDeckPlugin
+        asset_path: ${{runner.temp}}/artifacts/RelWithDebInfo-StreamDeckPlugin/de.codeix.micmutetoggle.streamDeckPlugin
+        asset_name: de.codeix.micmutetoggle.streamDeckPlugin
         asset_content_type: application/octet-stream
     - name: Attach PDB Files
       if: steps.ref.outputs.is-release == 'true'
