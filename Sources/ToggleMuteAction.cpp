@@ -14,7 +14,7 @@
 #include "UnmuteAction.h"
 
 const std::string ToggleMuteAction::ACTION_ID(
-  "de.codeix.micmutetoggle.toggle");
+  "de.codeix.audiotoggle.toggle");
 
 void ToggleMuteAction::MuteStateDidChange(bool isMuted) {
   ESDDebug("MuteStateDidChange to {} for context {}", isMuted, GetContext());

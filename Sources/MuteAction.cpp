@@ -10,7 +10,7 @@
 
 #include "PlayWavFile.h"
 
-const std::string MuteAction::ACTION_ID("de.codeix.micmutetoggle.mute");
+const std::string MuteAction::ACTION_ID("de.codeix.audiotoggle.mute");
 
 void MuteAction::MuteStateDidChange(bool isMuted) {
   SetState(isMuted ? 0 : 1);

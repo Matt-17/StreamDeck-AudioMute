@@ -13,7 +13,7 @@
       "SupportedInMultiActions": false,
       "Name": "Toggle Mute",
       "Tooltip": "This action toggles mute for audio devices (e.g. microphones, speakers)",
-      "UUID": "de.codeix.micmutetoggle.toggle"
+      "UUID": "de.codeix.audiotoggle.toggle"
     },
     {
       "Icon": "mic-off",
@@ -28,7 +28,7 @@
       "SupportedInMultiActions": true,
       "Name": "Mute",
       "Tooltip": "This action mutes an audio devices (e.g. microphones, speakers)",
-      "UUID": "de.codeix.micmutetoggle.mute"
+      "UUID": "de.codeix.audiotoggle.mute"
     },
     {
       "Icon": "mic-on",
@@ -44,7 +44,7 @@
       "SupportedInMultiActions": true,
       "Name": "Unmute",
       "Tooltip": "This action unmutes an audio devices (e.g. microphones, speakers)",
-      "UUID": "de.codeix.micmutetoggle.unmute"
+      "UUID": "de.codeix.audiotoggle.unmute"
     }
   ],
   "Author": "Fred Emmott / Matthias Voigt",

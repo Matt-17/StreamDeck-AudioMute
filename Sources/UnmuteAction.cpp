@@ -12,7 +12,7 @@
 #include "PlayWavFile.h"
 
 const std::string UnmuteAction::ACTION_ID(
-  "de.codeix.micmutetoggle.unmute");
+  "de.codeix.audiotoggle.unmute");
 
 void UnmuteAction::MuteStateDidChange(bool isMuted) {
   SetState(isMuted ? 1 : 0);
