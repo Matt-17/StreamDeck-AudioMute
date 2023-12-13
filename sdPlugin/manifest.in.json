@@ -52,7 +52,7 @@
   "CodePathWin": "sdmicmute.exe",
   "Description": "Toggle the mute for audio devices, such as microphones or speakers.",
   "PropertyInspectorPath": "propertyinspector/index.html",
-  "Name": "Audio Mute",
+  "Name": "Audio Toggle",
   "Category": "Audio Devices",
   "CategoryIcon": "glyphicons-basic-140-adjust",
   "Icon": "mic-off",
